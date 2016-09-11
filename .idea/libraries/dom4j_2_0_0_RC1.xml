@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="dom4j-2.0.0-RC1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.idea/lib/dom4j-2.0.0-RC1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/itext-2.1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/itext-rtf-2.1.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/jxl-2.6.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/ooxml-schemas-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/poi-3.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/poi-ooxml-3.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/poi-scratchpad-3.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/.idea/lib/xmlbeans-2.6.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
