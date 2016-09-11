@@ -13,6 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("bdface.fxml"));
         primaryStage.setTitle("APU Analytics DB");
         primaryStage.setScene(new Scene(root, 590, 275));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
 
