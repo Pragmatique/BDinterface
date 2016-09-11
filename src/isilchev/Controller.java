@@ -78,46 +78,7 @@ public class Controller implements Initializable {
     MenuItem exportWithFilters;
 
 
-    private Task<Void> worker = new Task<Void>() {
-        double oldVal = 0.0;
-        @Override
-        protected Void call() throws Exception {
-            System.out.println("Start worker");
 
-            dbl.addListener(new ChangeListener()  {
-
-                /*@Override
-                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                    dbl.set((Double)newValue);
-                    System.out.println("New val"+dbl.get());
-                    updateProgress((Double)newValue, 1.0);
-                    System.out.println(progressBar.getProgress());
-
-                }*/
-
-
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    System.out.println("New valic"+dbl.get());
-                    updateProgress((Double)newValue, 1.0);
-                }
-            });
-
-            System.out.println(progressBar.getProgress());
-            while (oldVal<2.0) {
-                if (dbl.get() != oldVal) {
-
-                    System.out.println("New val" + dbl);
-                    //progressBar.setProgress(dbl.get());
-                    updateProgress(dbl.doubleValue(),1.0);
-                    oldVal = dbl.get();
-                }
-                Thread.sleep(100);
-            }
-
-            return null;
-        }
-    };
 
     @FXML
     public void progressProperty(){
@@ -175,16 +136,6 @@ public class Controller implements Initializable {
 
     }
 
-    /*@FXML
-    private void exceptionPrinter(Exception e)
-    {
-        //StackTraceElement[] ste = e.getStackTrace();
-        Text t1 = new Text();
-        t1.setText("\n"+e.toString());
-        t1.setStyle("-fx-fill: RED");
-
-        MyTextFlow0.getChildren().add(t1);
-    }*/
 
     private void exceptionPrinter(Exception e)
     {
@@ -200,15 +151,13 @@ public class Controller implements Initializable {
             }
         };
 
-        //Thread th = new Thread(printer);
-        //th.setDaemon(true);
         th.start();
         th.run();
     }
 
 
     @FXML
-         private void chooseFileForImport(ActionEvent event)
+    private void chooseFileForImport(ActionEvent event)
     {
         //String output="";
 
@@ -238,30 +187,6 @@ public class Controller implements Initializable {
     @FXML
     private void importToDB(ActionEvent event){
 
-        /*Service<Void> myService = new Service<Void>() {
-
-            @Override
-            protected Task<Void> createTask() {
-                return new Task<Void>() {
-
-                    @Override
-                    protected Void call() throws Exception {
-                        try {
-                            ImportToDB importToDB=new ImportToDB(new File(filename),conn);
-                            importToDB.setProgressUpdate((workDone, totalWork) ->
-                                    updateProgress(workDone, totalWork));
-
-                            importToDB.xlsxBrowser();
-
-                        } catch (InterruptedException ex) {
-                            ex.printStackTrace();
-                        }
-
-                        return null;
-                    }
-                };
-            }
-        };*/
 
         try {
             ImportToDB importToDB=new ImportToDB(new File(filename),conn,progressBar);
