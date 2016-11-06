@@ -192,7 +192,7 @@ public class Controller implements Initializable {
 
 
         try {
-            ImportToDB importToDB=new ImportToDB(new File(filename),conn,progressBar);
+            ImportToDB importToDB=new ImportToDB(new File(filename),conn,progressBar,MyLabel1);
             importToDB.xlsxBrowser();
 
 

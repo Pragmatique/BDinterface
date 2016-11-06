@@ -3,8 +3,10 @@ package isilchev.model;
 import com.mysql.jdbc.Statement;
 import isilchev.exceptions.UnsupportedFileTypeExceptionforImport;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -56,6 +58,7 @@ public class ImportToDB {
 
 
     ProgressBar progressBar;
+    Label label;
 
     public Task createWorker() {
         return new Task() {
@@ -71,10 +74,10 @@ public class ImportToDB {
         };
     }
 
-    public ImportToDB(File file, Connection conn,ProgressBar progressBar)throws UnsupportedFileTypeExceptionforImport,SQLException {
+    public ImportToDB(File file, Connection conn,ProgressBar progressBar, Label label)throws UnsupportedFileTypeExceptionforImport,SQLException {
         try {
             if ((file.getCanonicalPath().endsWith("xls"))||(file.getCanonicalPath().endsWith("xlsx"))){
-                this.file=file; this.conn=conn;this.progressBar=progressBar;} else throw new UnsupportedFileTypeExceptionforImport();
+                this.file=file; this.conn=conn;this.progressBar=progressBar;this.label=label;} else throw new UnsupportedFileTypeExceptionforImport();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -170,6 +173,9 @@ public class ImportToDB {
 
         };
         progressBar.progressProperty().bind(taskImport.progressProperty());
+        label.textProperty().bind(Bindings.when(taskImport.progressProperty().lessThan(0))
+                .then("0%")
+                .otherwise(taskImport.progressProperty().multiply(100).asString("%.0f%%")));
         new Thread(taskImport).start();
 
         /*FileInputStream fis = new FileInputStream(file);
