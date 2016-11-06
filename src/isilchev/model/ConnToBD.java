@@ -1,5 +1,7 @@
 package isilchev.model;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -15,8 +17,11 @@ public class ConnToBD {
     public Logger logger = Logger.getLogger(Logger.class.getName());
     public Connection conn = null;
     private boolean isconnected=false;
-    final String INSERT_SYUGETS = "INSERT INTO syugets (key_syuget, date, channel,start_time,end_time,tittle,description,reach)" +
-            " VALUES (?,?,?,?,?,?,?,?)";
+
+    private static final String DATABASE_USER = "user";
+    private static final String DATABASE_PASSWORD = "password";
+    private static final String MYSQL_AUTO_RECONNECT = "autoReconnect";
+    private static final String MYSQL_MAX_RECONNECTS = "maxReconnects";
 
     public ConnToBD(){
         Logger log = Logger.getLogger(ConnToBD.class.getName());
@@ -40,19 +45,30 @@ public class ConnToBD {
 
     }
 
-    public void connect() {
+    public void connect() throws ClassNotFoundException,SQLException,CommunicationsException {
         String url = "jdbc:mysql://127.0.0.1:3306/tvbase";
         String user = "root";
         String password = "";
-        try {
+
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url, user, password);
+
+            java.util.Properties connProperties = new java.util.Properties();
+
+            // set additional connection properties:
+            // if connection stales, then make automatically
+            // reconnect; make it alive again;
+            // if connection stales, then try for reconnection;
+            connProperties.put(DATABASE_USER, user);
+            connProperties.put(DATABASE_PASSWORD, password);
+
+            connProperties.put(MYSQL_AUTO_RECONNECT, "true");
+            connProperties.put(MYSQL_MAX_RECONNECTS, "4");
+            conn = DriverManager.getConnection(url, connProperties);
+
             //conn = DriverManager.;
 
-        }catch (ClassNotFoundException ex) {ex.printStackTrace();}
-        catch (SQLException ex) { System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());}
+
+
         if (conn!=null) setIsconnected(true);
 
     }
