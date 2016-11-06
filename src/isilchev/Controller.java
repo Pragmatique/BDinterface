@@ -54,6 +54,9 @@ public class Controller implements Initializable {
     Label MyLabel0;
 
     @FXML
+    Label MyLabel1;
+
+    @FXML
     ScrollPane MyScrollPane0;
 
     @FXML

@@ -43,9 +43,6 @@
         </menus>
       </MenuBar>
    </top>
-   <center>
-      <ProgressBar fx:id="progressBar" prefHeight="18.0" prefWidth="287.0" progress="0.0" BorderPane.alignment="CENTER" />
-   </center>
    <left>
       <GridPane fx:id="gridPane" prefHeight="117.0" prefWidth="272.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -70,4 +67,25 @@
          </children>
       </GridPane>
    </left>
+   <right>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="318.0" minWidth="10.0" prefWidth="318.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="0.0" prefWidth="0.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="45.0" minHeight="0.0" prefHeight="11.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ProgressBar fx:id="progressBar" prefHeight="31.0" prefWidth="287.0" progress="0.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+            <Label fx:id="MyLabel1" text="0%" textFill="RED" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </right>
 </BorderPane>
