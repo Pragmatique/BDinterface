@@ -2,7 +2,9 @@ package isilchev.model;
 
 import isilchev.Controller;
 import isilchev.exceptions.UnsupportedFileTypeExceptionforImport;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import org.apache.poi.ss.format.CellFormatType;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -58,14 +60,16 @@ public class ExportFromDB {
 
 
     ProgressBar progressBar;
+    Label label;
 
 
-    public ExportFromDB(File folder,Connection conn,ProgressBar progressBar,LocalDate ld1,LocalDate ld2,String request) {
+    public ExportFromDB(File folder,Connection conn,ProgressBar progressBar,LocalDate ld1,LocalDate ld2,String request, Label label) {
 
         this.folder=folder;
         this.conn=conn;
         this.progressBar=progressBar;
         this.tp=new TextParser(request);
+        this.label=label;
 
         System.out.println("Start");
         if (ld1!=null){dt1 = dt1.valueOf(ld1);}else {dt1=Date.valueOf("2006-01-01");}
@@ -87,10 +91,11 @@ public class ExportFromDB {
 
     }
 
-    public ExportFromDB(File folder,Connection conn,ProgressBar progressBar) {
+    public ExportFromDB(File folder,Connection conn,ProgressBar progressBar, Label label) {
         this.folder=folder;
         this.conn=conn;
         this.progressBar=progressBar;
+        this.label=label;
         System.out.println("Start");
         try {
             PreparedStatement pstmt1 = conn.prepareStatement(GET_PERSONS_NAME,ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -196,6 +201,9 @@ public class ExportFromDB {
 
         };
         progressBar.progressProperty().bind(taskExport.progressProperty());
+        label.textProperty().bind(Bindings.when(taskExport.progressProperty().lessThan(0))
+                .then("0%")
+                .otherwise(taskExport.progressProperty().multiply(100).asString("%.0f%%")));
         new Thread(taskExport).start();
         System.out.println(folder.getCanonicalPath()+fileName);
         //FileOutputStream fileOut = new FileOutputStream(folder+fileName);
@@ -281,6 +289,9 @@ public class ExportFromDB {
 
         };
         progressBar.progressProperty().bind(taskFlattenExport.progressProperty());
+        label.textProperty().bind(Bindings.when(taskFlattenExport.progressProperty().lessThan(0))
+                .then("0%")
+                .otherwise(taskFlattenExport.progressProperty().multiply(100).asString("%.0f%%")));
         new Thread(taskFlattenExport).start();
         System.out.println(folder.getCanonicalPath()+fileName);
         //FileOutputStream fileOut = new FileOutputStream(folder+fileName);
@@ -369,6 +380,9 @@ public class ExportFromDB {
 
         };
         progressBar.progressProperty().bind(taskFlattenExport.progressProperty());
+        label.textProperty().bind(Bindings.when(taskFlattenExport.progressProperty().lessThan(0))
+                .then("0%")
+                .otherwise(taskFlattenExport.progressProperty().multiply(100).asString("%.0f%%")));
         new Thread(taskFlattenExport).start();
         System.out.println(folder.getCanonicalPath()+fileName);
         //FileOutputStream fileOut = new FileOutputStream(folder+fileName);
@@ -513,6 +527,9 @@ public class ExportFromDB {
 
         };
         progressBar.progressProperty().bind(taskExport.progressProperty());
+        label.textProperty().bind(Bindings.when(taskExport.progressProperty().lessThan(0))
+                .then("0%")
+                .otherwise(taskExport.progressProperty().multiply(100).asString("%.0f%%")));
         new Thread(taskExport).start();
         System.out.println(folder.getCanonicalPath()+fileName);
         //FileOutputStream fileOut = new FileOutputStream(folder+fileName);

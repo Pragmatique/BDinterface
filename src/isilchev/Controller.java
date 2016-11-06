@@ -135,7 +135,9 @@ public class Controller implements Initializable {
                 MyLabel0.setStyle("-fx-background-color: #00ff14");
                 MyTextFlow0.getChildren().add(new Text("Connected to DB"));
             }
-        }catch (Exception ex){ex.printStackTrace(); exceptionPrinter(ex);}
+        }catch (com.mysql.jdbc.exceptions.jdbc4.CommunicationsException ex){ex.printStackTrace(); exceptionPrinter(ex);}
+        catch (SQLException ex){ex.printStackTrace(); exceptionPrinter(ex);}
+        catch (ClassNotFoundException ex){ex.printStackTrace(); exceptionPrinter(ex);}
 
     }
 
@@ -225,7 +227,7 @@ public class Controller implements Initializable {
     private void exportFromDB(ActionEvent event){
 
         try {
-            ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar);
+            ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar,MyLabel1);
             exportFromDB.exporterAll();
             /*dbl.addListener(new ChangeListener<Number>() {
                 @Override
@@ -262,7 +264,7 @@ public class Controller implements Initializable {
 
         try {
             ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar,
-                    datePicker1.getValue(),datePicker2.getValue(),request);
+                    datePicker1.getValue(),datePicker2.getValue(),request,MyLabel1);
             exportFromDB.exporterWithFilters();
             /*dbl.addListener(new ChangeListener<Number>() {
                 @Override
@@ -293,7 +295,7 @@ public class Controller implements Initializable {
 
         try {
 
-            ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar);
+            ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar,MyLabel1);
             exportFromDB.flattenexporterAll();
 
 
@@ -326,7 +328,7 @@ public class Controller implements Initializable {
         try {
 
             ExportFromDB exportFromDB=new ExportFromDB(new File(directoryforexport),conn,progressBar,
-                    datePicker1.getValue(),datePicker2.getValue(),request);
+                    datePicker1.getValue(),datePicker2.getValue(),request,MyLabel1);
             exportFromDB.flattenexportWithFilters();
 
 
